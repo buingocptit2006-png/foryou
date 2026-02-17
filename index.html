@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💖</title>
+<title>For You 💗</title>
 
 <style>
 body{
@@ -11,20 +11,21 @@ body{
   overflow:hidden;
   font-family:'Comic Sans MS',cursive;
   background:linear-gradient(135deg,#ffc0cb,#ff9ecf,#ffd6f5);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
 /* CARD */
 .overlay{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
   background:white;
   padding:50px;
   border-radius:30px;
   text-align:center;
   box-shadow:0 20px 50px rgba(255,105,180,0.4);
   width:380px;
+  position:relative;
   z-index:10;
 }
 
@@ -57,58 +58,39 @@ button{
   min-height:120px;
 }
 
-/* LOOPY SNAKE */
+/* LOOPY 2 BÊN */
 .loopy{
   position:absolute;
-  width:120px;
-  pointer-events:none;
+  width:150px;
+  animation:loopyBeat 1.5s infinite;
+}
+
+@keyframes loopyBeat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+
+.left{
+  left:5%;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.right{
+  right:5%;
+  top:50%;
+  transform:translateY(-50%);
 }
 </style>
 </head>
 
 <body>
 
-<!-- SNAKE CONTAINER -->
-<script>
-const snakeImages=[
-"loopy1.jpg","loopy2.jpg","loopy3.jpg","loopy4.jpg",
-"loopy5.jpg","loopy6.jpg","loopy7.jpg","loopy8.jpg"
-];
+<!-- LOOPY TRÁI PHẢI -->
+<img src="loopy1.jpg" class="loopy left">
+<img src="loopy2.jpg" class="loopy right">
 
-const snake=[];
-const spacing=90;
-let baseY=window.innerHeight;
-let speed=1.5;
-
-snakeImages.forEach((src,i)=>{
-  const img=document.createElement("img");
-  img.src=src;
-  img.className="loopy";
-  img.style.left="50%";
-  img.style.transform="translateX(-50%)";
-  img.style.top=(baseY+i*spacing)+"px";
-  document.body.appendChild(img);
-  snake.push(img);
-});
-
-function animateSnake(){
-  baseY-=speed;
-
-  snake.forEach((img,i)=>{
-    img.style.top=(baseY+i*spacing)+"px";
-  });
-
-  if(baseY < -spacing*snakeImages.length){
-    baseY=window.innerHeight;
-  }
-
-  requestAnimationFrame(animateSnake);
-}
-
-animateSnake();
-</script>
-
-<!-- CARD -->
 <div class="overlay">
   <div id="startSection">
     <button onclick="startLove()">Bắt đầu 💖</button>
@@ -118,7 +100,7 @@ animateSnake();
   <div id="message"></div>
 </div>
 
-<!-- NHẠC CỦA BẠN -->
+<!-- FILE CỦA BẠN -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 <audio id="typingSound" src="typing.mp3"></audio>
 
@@ -131,8 +113,6 @@ const messages=[
 ];
 
 let index=0;
-let charIndex=0;
-
 const messageEl=document.getElementById("message");
 const heart=document.getElementById("heart");
 const music=document.getElementById("bgMusic");
@@ -148,6 +128,11 @@ function startLove(){
 function showLine(){
   if(index<messages.length){
     messageEl.innerHTML="";
+    
+    // CHỈ PHÁT TYPING KHI DÒNG BẮT ĐẦU
+    typing.currentTime=0;
+    typing.play().catch(()=>{});
+
     typeEffect(messages[index],0,()=>{
       if(index!==messages.length-1){
         setTimeout(()=>{
@@ -161,8 +146,6 @@ function showLine(){
 
 function typeEffect(text,i,callback){
   if(i<text.length){
-    typing.currentTime=0;
-    typing.play().catch(()=>{});
     messageEl.innerHTML+=text.charAt(i);
     setTimeout(()=>{
       typeEffect(text,i+1,callback);
