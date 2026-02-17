@@ -58,11 +58,12 @@ button{
   min-height:120px;
 }
 
-/* LOOPY CHUNG */
+/* LOOPY */
 .loopy{
   position:absolute;
   width:130px;
   animation:loopyBeat 1.5s infinite;
+  transition:0.3s;
 }
 
 @keyframes loopyBeat{
@@ -71,7 +72,19 @@ button{
   100%{transform:scale(1);}
 }
 
-/* CHIA 2 BÊN */
+/* Khi tới câu cuối */
+.final{
+  animation:finalBeat 0.8s infinite;
+  box-shadow:0 0 30px hotpink;
+}
+
+@keyframes finalBeat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+/* Chia vị trí */
 .left1{left:2%; top:10%;}
 .left2{left:2%; top:30%;}
 .left3{left:2%; top:50%;}
@@ -86,7 +99,7 @@ button{
 
 <body>
 
-<!-- 8 HÌNH -->
+<!-- 8 LOOPY -->
 <img src="loopy1.jpg" class="loopy left1">
 <img src="loopy2.jpg" class="loopy left2">
 <img src="loopy3.jpg" class="loopy left3">
@@ -106,7 +119,6 @@ button{
   <div id="message"></div>
 </div>
 
-<!-- NHẠC CỦA BẠN -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 <audio id="typingSound" src="typing.mp3"></audio>
 
@@ -123,6 +135,7 @@ const messageEl=document.getElementById("message");
 const heart=document.getElementById("heart");
 const music=document.getElementById("bgMusic");
 const typing=document.getElementById("typingSound");
+const loopies=document.querySelectorAll(".loopy");
 
 function startLove(){
   document.getElementById("startSection").style.display="none";
@@ -136,8 +149,11 @@ function showLine(){
     messageEl.innerHTML="";
     typing.currentTime=0;
     typing.play().catch(()=>{});
+
     typeEffect(messages[index],0,()=>{
-      if(index!==messages.length-1){
+      if(index===messages.length-1){
+        activateFinalEffect();
+      }else{
         setTimeout(()=>{
           index++;
           showLine();
@@ -156,6 +172,12 @@ function typeEffect(text,i,callback){
   }else{
     callback();
   }
+}
+
+function activateFinalEffect(){
+  loopies.forEach(loopy=>{
+    loopy.classList.add("final");
+  });
 }
 </script>
 
