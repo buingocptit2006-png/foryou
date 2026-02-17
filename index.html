@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💗</title>
+<title>For You 💖</title>
 
 <style>
 body{
@@ -58,10 +58,10 @@ button{
   min-height:120px;
 }
 
-/* LOOPY 2 BÊN */
+/* LOOPY CHUNG */
 .loopy{
   position:absolute;
-  width:150px;
+  width:130px;
   animation:loopyBeat 1.5s infinite;
 }
 
@@ -71,25 +71,31 @@ button{
   100%{transform:scale(1);}
 }
 
-.left{
-  left:5%;
-  top:50%;
-  transform:translateY(-50%);
-}
+/* CHIA 2 BÊN */
+.left1{left:2%; top:10%;}
+.left2{left:2%; top:30%;}
+.left3{left:2%; top:50%;}
+.left4{left:2%; top:70%;}
 
-.right{
-  right:5%;
-  top:50%;
-  transform:translateY(-50%);
-}
+.right1{right:2%; top:10%;}
+.right2{right:2%; top:30%;}
+.right3{right:2%; top:50%;}
+.right4{right:2%; top:70%;}
 </style>
 </head>
 
 <body>
 
-<!-- LOOPY TRÁI PHẢI -->
-<img src="loopy1.jpg" class="loopy left">
-<img src="loopy2.jpg" class="loopy right">
+<!-- 8 HÌNH -->
+<img src="loopy1.jpg" class="loopy left1">
+<img src="loopy2.jpg" class="loopy left2">
+<img src="loopy3.jpg" class="loopy left3">
+<img src="loopy4.jpg" class="loopy left4">
+
+<img src="loopy5.jpg" class="loopy right1">
+<img src="loopy6.jpg" class="loopy right2">
+<img src="loopy7.jpg" class="loopy right3">
+<img src="loopy8.jpg" class="loopy right4">
 
 <div class="overlay">
   <div id="startSection">
@@ -100,7 +106,7 @@ button{
   <div id="message"></div>
 </div>
 
-<!-- FILE CỦA BẠN -->
+<!-- NHẠC CỦA BẠN -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 <audio id="typingSound" src="typing.mp3"></audio>
 
@@ -128,11 +134,8 @@ function startLove(){
 function showLine(){
   if(index<messages.length){
     messageEl.innerHTML="";
-    
-    // CHỈ PHÁT TYPING KHI DÒNG BẮT ĐẦU
     typing.currentTime=0;
     typing.play().catch(()=>{});
-
     typeEffect(messages[index],0,()=>{
       if(index!==messages.length-1){
         setTimeout(()=>{
